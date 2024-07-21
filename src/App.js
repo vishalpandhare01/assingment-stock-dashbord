@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
-import LoginForm from './components/LoginForm';
-import StockSubscription from './components/StockSubscription';
-import StockList from './components/StockList';
-
-
+import React, { useState } from "react";
+import LoginForm from "./components/LoginForm";
+import StockSubscription from "./components/StockSubscription";
+import StockList from "./components/StockList";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -23,9 +21,8 @@ const App = () => {
         <LoginForm onLogin={handleLogin} />
       ) : (
         <div>
-          <h1>Welcome {user}</h1>
+          <h4 className="m-2">Login user:- {user}</h4>
           <StockSubscription onSubscribe={handleSubscribe} />
-          <StockList stocks={stocks} />
         </div>
       )}
     </div>
