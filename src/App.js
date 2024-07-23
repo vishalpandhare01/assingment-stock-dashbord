@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import LoginForm from "./components/LoginForm";
 import StockSubscription from "./components/StockSubscription";
-import StockList from "./components/StockList";
 
 const App = () => {
   const [user, setUser] = useState(null);

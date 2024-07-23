@@ -27,6 +27,25 @@ const StockSubscription = ({ onSubscribe }) => {
   const [selectedStocks, setSelectedStocks] = useState([]);
   const [series, setSeries] = useState(initialSeries);
 
+  async function fetchStovckData() {
+    try {
+      const response = await fetch("http://localhost:8000/getStock");
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setSeries(data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    try {
+      setInterval(() => {
+        fetchStovckData();
+      }, 1000);
+    } catch (error) {}
+  }, []);
   const availableStocks = ["GOOG", "TSLA", "AMZN", "META", "NVDA"];
 
   const handleSubscription = () => {

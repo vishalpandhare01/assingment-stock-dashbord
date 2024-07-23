@@ -1,13 +1,36 @@
 // src/StockManager.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
-const StockManager = ({stocks }) => {
+const StockManager = ({ stocks }) => {
   // const [stocks, setStocks] = useState(series);
   const [subscribedStocks, setSubscribedStocks] = useState([]);
 
+  useEffect(() => {
+    // Function to update subscribed stocks to reflect any changes in stock prices
+    const updateSubscribedStocks = () => {
+      setSubscribedStocks((prevSubscribedStocks) =>
+        prevSubscribedStocks.map((subscribedStock) => {
+          const updatedStock = stocks.find((stock) => stock.name === subscribedStock.name);
+          return updatedStock ? { ...subscribedStock, data: updatedStock.data } : subscribedStock;
+        })
+      );
+    };
+
+    updateSubscribedStocks();
+  }, [stocks]); // Dependency on stocks to update subscribed stocks when the stock prices change
+
   const handleSubscribe = (stock) => {
-    setSubscribedStocks([...subscribedStocks, stock]);
-    alert(`Subscribed to ${stock.name}`);
+    // Check if the stock is already subscribed to avoid duplicates
+    setSubscribedStocks((prevSubscribedStocks) => {
+      const isSubscribed = prevSubscribedStocks.find((subscribedStock) => subscribedStock.name === stock.name);
+      if (isSubscribed) {
+        alert(`Already subscribed to ${stock.name}`);
+        return prevSubscribedStocks;
+      }
+      const newSubscribedStocks = [...prevSubscribedStocks, stock];
+      alert(`Subscribed to ${stock.name}`);
+      return newSubscribedStocks;
+    });
   };
 
   return (
