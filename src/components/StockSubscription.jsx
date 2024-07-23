@@ -41,9 +41,10 @@ const StockSubscription = ({ onSubscribe }) => {
   }
   useEffect(() => {
     try {
-      setInterval(() => {
+    const intervalId =  setInterval(() => {
         fetchStovckData();
-      }, 1000);
+      }, 2000);
+      return () => clearInterval(intervalId); 
     } catch (error) {}
   }, []);
   const availableStocks = ["GOOG", "TSLA", "AMZN", "META", "NVDA"];
